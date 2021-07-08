@@ -28,7 +28,10 @@ class BookShow extends Component {
             location: "",
             language:"",
             showDate:"",
-            showTime:""
+            showTime:"",
+            tickets: 0,
+            unitPrice: 500,
+            availableTickets: 20
 
         }
     }
@@ -50,6 +53,10 @@ class BookShow extends Component {
 
     showTimeChangeHandler = (e) =>{
         this.setState({showTime: e.target.value})
+    }
+
+    ticketsChangeHandler = (e) =>{
+        this.setState({tickets:e.target.value})
     }
 
 
@@ -75,7 +82,7 @@ class BookShow extends Component {
                                         <MenuItem key = {"loc"+loc.id} value = {loc.location}>{loc.location}</MenuItem>
                                     ))} 
                                 </Select>
-                            </FormControl><br/><br/>
+                            </FormControl>
 
                             <FormControl required className = "formControl">
                                 <InputLabel htmlFor = "language"> Choose Language: </InputLabel>
@@ -86,7 +93,7 @@ class BookShow extends Component {
                                         <MenuItem key = {"lang"+lang.id} value = {lang.language}>{lang.language}</MenuItem>
                                     ))} 
                                 </Select>
-                            </FormControl><br/><br/>
+                            </FormControl>
 
                             <FormControl required className = "formControl">
                                 <InputLabel htmlFor = "showDate"> Choose Show Date: </InputLabel>
@@ -97,7 +104,7 @@ class BookShow extends Component {
                                         <MenuItem key = {"date"+showdate.id} value = {showdate.showDate}>{showdate.showDate}</MenuItem>
                                     ))} 
                                 </Select>
-                            </FormControl><br/><br/>
+                            </FormControl>
 
                             <FormControl required className = "formControl">
                                 <InputLabel htmlFor = "showTime"> Choose Show Time: </InputLabel>
@@ -109,6 +116,20 @@ class BookShow extends Component {
                                     ))} 
                                 </Select>
                             </FormControl>
+
+                            <FormControl required className = "formControl">
+                                <InputLabel htmlFor = "tickets"> Tickets: ({this.state.availableTickets} available)</InputLabel>
+                                <Input id = "tickets" value = {this.state.tickets !=0 ? this.state.tickets:""} onChange = {this.ticketsChangeHandler}/>
+                            </FormControl><br/><br/>
+                            <Typography>
+                                Unit Price Rs. {this.state.unitPrice}
+                            </Typography><br/>
+                            <Typography>
+                                Total Price Rs. {this.state.unitPrice * this.state.tickets}
+                            </Typography><br/><br/>
+                            <Button variant="contained" onClick = {this.bookShowButtonHandler} color= "primary">Book Show</Button>
+
+
 
 
 
