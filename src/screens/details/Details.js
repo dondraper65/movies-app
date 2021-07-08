@@ -6,15 +6,45 @@ import Typography from '@material-ui/core/Typography';
 import "../details/Details.css";
 import Home from "../../screens/home/Home";
 import YouTube from 'react-youtube';
-
-
+import ImageList from '@material-ui/core/ImageList';
+import ImageListItem from '@material-ui/core/ImageListItem';
+import ImageListItemBar from '@material-ui/core/ImageListItemBar';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 class Details extends Component {
 
     constructor(){
         super();
         this.state = {
-            movie:{}
+            movie:{},
+            starIcons: [
+                {
+                   id: 1,
+                   stateId: "star1",
+                   color: "black"
+                },
+                {
+                   id: 2,
+                   stateId: "star2",
+                   color: "black"
+                },
+                {
+                   id: 3,
+                   stateId: "star3",
+                   color: "black"
+                },
+                {
+                   id: 4,
+                   stateId: "star4",
+                   color: "black"
+                },
+                {
+                   id: 5,
+                   stateId: "star5",
+                   color: "black"
+                }
+             ]
+            
         }
     }
 
@@ -30,6 +60,23 @@ class Details extends Component {
         ReactDOM.render(<Home/>, document.getElementById('root'))
     }
 
+    artistClickHandler = (url) => {
+        window.location = url;
+    }
+
+    starClickHandler =(id) =>{
+        let starIconList = [];
+        for (let star of this.state.starIcons){
+            let starNode = star;
+            if(star.id<=id){
+                starNode.color = "yellow"
+            } else {
+                starNode.color = "black";
+            }
+            starIconList.push(starNode);
+        }
+        this.setState({starIcons: starIconList});
+    }
     render(){
         let movie = this.state.movie;
         const opts = {
@@ -74,7 +121,34 @@ class Details extends Component {
                             <YouTube videoId = {movie.trailer_url.split("?v=")[1]} opts = {opts} onReady = {this._onReady}/>
                         </div>
                     </div>
-                    <div className = "rightDetails"></div>
+                    <div className = "rightDetails">
+                        <Typography><span className = "bold">Rate This Movie:</span></Typography>
+                        {this.state.starIcons.map(star=>(
+                            <StarBorderIcon className = {star.color} key = {"star"+star.id} onClick = {()=> this.starClickHandler(star.id)}/>
+                        ))}
+
+
+                        <div className="bold marginBottom16 marginTop16">
+                                <Typography>
+                                    <span className="bold">Artists:</span>
+                                </Typography>
+                        </div>
+                        <div className="paddingRight">
+                            <ImageList cellHeight={160} cols={2}>
+                                {movie.artists != null && movie.artists.map(artist => (
+                                    <ImageListItem
+                                        className="gridTile"
+                                        onClick={() => this.artistClickHandler(artist.wiki_url)}
+                                        key={artist.id}>
+                                        <img src={artist.profile_url} alt={artist.first_name + " " + artist.last_name} />
+                                        <ImageListItemBar
+                                            title={artist.first_name + " " + artist.last_name}
+                                        />
+                                    </ImageListItem>
+                                ))}
+                            </ImageList>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

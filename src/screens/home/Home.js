@@ -129,7 +129,7 @@ class Home extends Component {
 
 
                                 <FormControl className = {classes.formControl}>
-                                    <Typography className = {classes.title} coloe= "textSecondary">
+                                    <Typography className = {classes.title} color= "textSecondary">
                                         FIND MOVIES BY:
                                     </Typography>
                                 </FormControl>
