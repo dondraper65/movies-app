@@ -9,9 +9,7 @@ import Home from "./screens/home/Home";
 
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Home />
-  </React.StrictMode>,
+    <Home />,
   document.getElementById('root')
 );
 
